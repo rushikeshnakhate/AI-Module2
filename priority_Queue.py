@@ -4,17 +4,15 @@ from heapq import heappush, heappop
 from typing import Any
 
 REMOVED = '<removed-task>'
+entry_finder = {}
+counter = itertools.count()
+pq = []
 
 
 @dataclass()
 class PriotizedItem:
     Priority: int
     item: Any = field(compare=False)
-
-
-entry_finder = {}
-counter = itertools.count()
-pq = []
 
 
 def remove_task(task):
@@ -37,3 +35,5 @@ def pop_task():
         if task is not REMOVED:
             del entry_finder[task]
             return task
+
+

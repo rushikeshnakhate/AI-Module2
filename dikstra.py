@@ -1,3 +1,5 @@
+from heapq import heappop
+
 import networkx as nx
 
 G = {
@@ -15,6 +17,7 @@ def setup_dijkstra(start):
     P = {}
     Q = [(0, start)]
     S = set()
+    return D, P, Q, S
 
 
 def relax_dijkstra(G, start, neighbor, D, P):
@@ -26,7 +29,20 @@ def relax_dijkstra(G, start, neighbor, D, P):
         return True
 
 
+def dijkstra(graph, start):
+    D, P, Q, S = setup_dijkstra(start)
+    while Q:
+        _, u = heappop(Q)
+        if u in S: continue
+        S.add(u)
+        for v in graph[u]:
+            relax_dijkstra(graph, u, v, D, P)
+            print(D, P)
+
+
 P = {}
 for outer_counter, u in enumerate(G):
     for inner_counter, v in enumerate(G[u]):
         relax_dijkstra(G, u, v, {u: 0}, P)
+
+# dijkstra(G, 'a')
